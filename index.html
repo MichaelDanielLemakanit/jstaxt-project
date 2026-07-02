@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <title>KRA Tax & Net Salary Calculator</title>
+    <style>
+        body {
+            background-color: #ffffff9b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media print {
+
+            /* Hide the input form, banner, and the print button itself */
+            #tax_form,
+            .bg-primary,
+            #receipt {
+                display: none !important;
+            }
+
+            /* Remove background shadows/borders for a clean paper look */
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+
+            body {
+                background-color: #fff !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar Container -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-medium" href="#">MJ-payslip check</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <!-- ms-auto cleanly pushes the menu navigation elements to the right -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4" style="max-width: 800px;">
+
+        <!-- Header Banner Section -->
+        <div class="d-flex justify-content-center bg-success text-white p-3 rounded shadow-sm mb-4">
+            <h4 class="mb-0 fw-bold"><i class="bi bi-calculator me-2"></i>KRA Payslip Tax Project</h4>
+        </div>
+
+        <!-- Input Form Section -->
+        <div class="card shadow-sm border-0 p-4 mb-4 bg-white" style="border-radius: 12px;">
+            <form id="tax_form">
+                <div class="mb-3">
+                    <label for="basic" class="form-label fw-semibold text-muted">Basic Salary (Ksh.)</label>
+                    <input type="number" class="form-control form-control-lg" id="basic" placeholder="e.g. 50000"
+                        min="0" required>
+                </div>
+                <div class="mb-4">
+                    <label for="benefits" class="form-label fw-semibold text-muted">Benefits / Allowances (Ksh.)</label>
+                    <input type="number" class="form-control form-control-lg" id="benefits" placeholder="e.g. 10000"
+                        min="0">
+                </div>
+
+                <div class="btn ">
+                    <button type="submit" class="btn btn-primary btn-m fw-bold py-2.5">
+                        Calculate
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Output Breakdown Display Grid Table -->
+        <div class="card shadow-sm border-0 p-4 bg-white" style="border-radius: 12px;">
+            <h5 class="fw-bold text-dark mb-3">Salary Breakdown Metrics</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="py-3">Task Category</th>
+                            <th scope="col" class="py-3 text-end">Value (Ksh.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-medium text-secondary">Gross Salary</td>
+                            <td id="gross" class="text-end fw-bold text-dark">0.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary">NHIF Deduction</td>
+                            <td id="nhif" class="text-end fw-semibold text-danger">0.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary">NSSF Contribution</td>
+                            <td id="nssf" class="text-end fw-semibold text-danger">0.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary">NHDF (Housing Levy)</td>
+                            <td id="nhdf" class="text-end fw-semibold text-danger">0.00</td>
+                        </tr>
+                        <tr class="table-sm">
+                            <td class="text-muted small ps-3">Taxable Income Base</td>
+                            <td id="taxable" class="text-end text-muted small pe-2">0.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary">PAYE (KRA Tax)</td>
+                            <td id="payee" class="text-end fw-semibold text-danger">0.00</td>
+                        </tr>
+                        <tr class="table-primary fs-5 border-top border-2">
+                            <td class="fw-bold text-success">Net Salary Payout</td>
+                            <td id="net" class="text-end fw-bold text-success">0.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- receipt btn -->
+                <button id="receipt" type="button" class="btn btn-outline-primary mt-2">Print receipt</button>
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <footer class="bg-success text-white text-center py-3 mt-auto">
+        <div class="container text-muted small">
+            &copy; 2026 Nairobi Delivery App. Logistics Authentication Node.
+        </div>
+    </footer>
+
+    <!-- Corrected index.js source asset pipeline hook link -->
+    <script src="index.js"></script>
+
+    <!-- Bootstrap Script Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
